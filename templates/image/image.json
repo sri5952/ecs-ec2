@@ -1,0 +1,24 @@
+[
+  {
+    "name": "${ecs_taskdefinition}",
+    "image": "${app_image}",
+    "cpu": 1024,
+    "memory": 2048,
+    "networkMode": "bridge",
+    "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${loggroups}",
+          "awslogs-region": "${aws_region}",
+          "awslogs-stream-prefix": "forntendapp"
+        }
+    },
+    "portMappings": [
+      {
+        "containerPort": 80,
+        "hostPort": 80
+      }
+    ]
+  }
+]
+
