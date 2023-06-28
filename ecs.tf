@@ -69,7 +69,13 @@ resource "aws_launch_configuration" "lessonmgmt" {
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
-  user_data                   = data.template_file.lessons-mgmt_app_userdata.rendered
+  user_data                   = <<EOF
+echo  "ECS_CLUSTER=lessons-mgmt-cluster">> /etc/ecs/ecs.config
+sudo yum install -y ecs-init
+sudo service docker start
+sudo service ecs start
+systemctl enable --now --no-block ecs.service
+EOF
   iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
   associate_public_ip_address = true
   root_block_device {
