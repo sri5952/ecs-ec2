@@ -63,11 +63,11 @@ resource "aws_ecs_service" "main" {
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt"
-  image_id                    = "ami-0310483fb2b488153"
+  image_id                    = "ami-0310483fb2b488153"                                                         
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
-  user_data                   = "#!/bin/bash\necho ECS_CLUSTER=ecsclustername >> /etc/ecs/ecs.config"
+  user_data                   = "#!/bin/bash\necho ECS_CLUSTER=lessons-mgmt-cluster >> /etc/ecs/ecs.config"
   iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
   associate_public_ip_address = true
   root_block_device {
@@ -76,18 +76,5 @@ resource "aws_launch_configuration" "lessonmgmt" {
     delete_on_termination = true
     encrypted             = true
   }
-}
-
-
-resource "aws_autoscaling_group" "failure_analysis_ecs_asg" {
-    name                      = "asg"
-    vpc_zone_identifier       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
-    launch_configuration      = aws_launch_configuration.lessonmgmt.name
-    desired_capacity          = 2
-    min_size                  = 1
-    max_size                  = 4
-    health_check_grace_period = 300
-    health_check_type         = "EC2"
-}
-
-
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                                                                                           
