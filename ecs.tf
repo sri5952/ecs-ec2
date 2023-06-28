@@ -70,7 +70,7 @@ data "template_file" "lessons-mgmt_app_userdata" {
 
 
 resource "aws_launch_configuration" "lessonmgmt" {
-  name          = "lessonsmgmt"
+  name          = "lessonsmgmt-testing"
   image_id                    = "ami-0aeea5e3528304b0d"                                                         
   instance_type               = "m4.large"
   key_name                    = "eks"
@@ -87,7 +87,7 @@ resource "aws_launch_configuration" "lessonmgmt" {
 }     
 
 resource "aws_autoscaling_group" "failure_analysis_ecs_asg" {
-    name                      = "asg"
+    name                      = "asg-testing"
     vpc_zone_identifier       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
     launch_configuration      = aws_launch_configuration.lessonmgmt.name
 
