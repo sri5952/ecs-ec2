@@ -63,6 +63,31 @@ data "template_file" "lessons-mgmt_app_userdata" {
 }
 
 
+data "aws_ami" "latest_ecs" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["*amazon-ecs-optimized"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["591542846629"]
+}
+
+data "template_file" "ecs-cluster" {
+  template = file("templates/ecs-cluster.tpl")
+
+  vars = {
+    clustername      = var.ecsclustername
+  }
+}
+
+
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt-testing"
   image_id                    = "ami-0aeea5e3528304b0d"                                                         
