@@ -60,7 +60,6 @@ resource "aws_ecs_service" "main" {
   depends_on = [aws_alb_listener.front_end, aws_iam_role_policy_attachment.ecs_task_execution_role]
 }
 
-/*
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt"
@@ -68,8 +67,8 @@ resource "aws_launch_configuration" "lessonmgmt" {
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
-  user_data                   = data.template_file.lessons-mgmt_app_userdata.rendered
-  iam_instance_profile = ecs_task_execution_role.test_profile.arn
+  user_data                   = "#!/bin/bash\necho ECS_CLUSTER=ecsclustername >> /etc/ecs/ecs.config"
+  iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
   associate_public_ip_address = true
   root_block_device {
     volume_size           = 40
@@ -82,14 +81,13 @@ resource "aws_launch_configuration" "lessonmgmt" {
 
 resource "aws_autoscaling_group" "bar" {
   name                      = "launchconfig"
-  max_size                  = 2
+  max_size                  = 3
   min_size                  = 1
   health_check_grace_period = 300
   health_check_type         = "ELB"
-  desired_capacity          = 4
+  desired_capacity          = 2
   force_delete              = true
   launch_configuration      = aws_launch_configuration.lessonmgmt.name
   vpc_zone_identifier       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
 }
 
-*/
