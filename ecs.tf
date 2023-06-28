@@ -65,7 +65,7 @@ data "template_file" "lessons-mgmt_app_userdata" {
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt-testing"
-  image_id                    = "ami-0aeea5e3528304b0d"                                                         
+  image_id                    = "ami-076015d9e4b6b6a0b"                                                         
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
