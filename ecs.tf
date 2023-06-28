@@ -70,6 +70,7 @@ resource "aws_launch_configuration" "lessonmgmt" {
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
   user_data                   = <<EOF
+#!/bin/bash
 echo  "ECS_CLUSTER=lessons-mgmt-cluster">> /etc/ecs/ecs.config
 sudo yum install -y ecs-init
 sudo service docker start
