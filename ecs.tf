@@ -90,7 +90,7 @@ data "template_file" "ecs-cluster" {
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt-testing"
-  image_id                    = "ami-0aeea5e3528304b0d"                                                         
+  image_id                    = data.aws_ami.latest_ecs.id                                                      
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
