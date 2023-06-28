@@ -8,7 +8,7 @@ data "aws_iam_policy_document" "ecs_task_execution_role" {
 
     principals {
       type        = "Service"
-      identifiers = ["ecs-tasks.amazonaws.com"]
+      identifiers = ["ec2.amazonaws.com"]
     }
   }
 }
@@ -25,8 +25,8 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "ecs_task_execution_role" "test_profile" {
-  name = "lessons_mgmt"
+resource "aws_iam_instance_profile" "ecs_agent" {
+  name = "ecs-agent"
   role = aws_iam_role.ecs_task_execution_role.name
 }
 
