@@ -63,7 +63,7 @@ resource "aws_ecs_service" "main" {
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt"
-  image_id                    = "ami-0df7a207adb9748c7"                                                         
+  image_id                    = "ami-0aeea5e3528304b0d"                                                         
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
@@ -76,5 +76,21 @@ resource "aws_launch_configuration" "lessonmgmt" {
     delete_on_termination = true
     encrypted             = true
   }
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+}     
+
+resource "aws_autoscaling_group" "failure_analysis_ecs_asg" {
+    name                      = "asg"
+    vpc_zone_identifier       = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
+    launch_configuration      = aws_launch_configuration.lessonmgmt.name
+
+    desired_capacity          = 2
+    min_size                  = 1
+    max_size                  = 3
+    health_check_grace_period = 300
+    health_check_type         = "EC2"
+}
+
+
+
+
                                                                                                                                                                                                                                                                                                                                            
