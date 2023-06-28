@@ -17,7 +17,7 @@ variable "aws_ecs_service_name" {
 
 variable "aws_region" {
   description = "The AWS region things are created in"
-  default     = "ap-southeast-2"
+  default     = "ap-southeast-1"
 }
 
 variable "ecs_task_execution_role_name" {
@@ -114,11 +114,11 @@ variable "private_subnet_4_cidr_block" {
 
 */
 variable "subnet_az_1" {
-  default = "ap-southeast-2a"
+  default = "ap-southeast-1a"
 }
 
 variable "subnet_az_2" {
-  default = "ap-southeast-2b"
+  default = "ap-southeast-1b"
 }
 
 variable "securitygroupname" {
