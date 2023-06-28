@@ -20,13 +20,7 @@ data "template_file" "lessons-mgmt_app" {
   }
 }
 
-data "template_file" "lessons-mgmt_app_userdata" {
-  template = file("./templates/userdata.sh")
 
-  vars = {
-    ecs_taskdefinition      = var.ecs_taskdefinition
-  }
-}
 
 resource "aws_ecs_task_definition" "app" {
   family                   = var.ecs_taskdefinition
@@ -61,7 +55,7 @@ resource "aws_ecs_service" "main" {
 }
 
 data "template_file" "lessons-mgmt_app_userdata" {
-  template = file("./templates/image/image.json")
+  template = file("./templates/userdata.sh")
 
   vars = {
     clustername      = var.ecsclustername
