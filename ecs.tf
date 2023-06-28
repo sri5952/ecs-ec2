@@ -60,6 +60,14 @@ resource "aws_ecs_service" "main" {
   depends_on = [aws_alb_listener.front_end, aws_iam_role_policy_attachment.ecs_task_execution_role]
 }
 
+data "template_file" "lessons-mgmt_app_userdata" {
+  template = file("./templates/image/image.json")
+
+  vars = {
+    clustername      = var.ecsclustername
+  }
+}
+
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt"
@@ -67,7 +75,7 @@ resource "aws_launch_configuration" "lessonmgmt" {
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
-  user_data                   = "#!/bin/bash\necho ECS_CLUSTER=$(terraform output -raw ecsclustername) >> /etc/ecs/ecs.config"
+  user_data                   = data.template_file.lessons-mgmt_app_userdata.rendered
   iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
   associate_public_ip_address = true
   root_block_device {
