@@ -63,7 +63,7 @@ resource "aws_ecs_service" "main" {
 
 resource "aws_launch_configuration" "lessonmgmt" {
   name          = "lessonsmgmt"
-  image_id                    = "ami-0310483fb2b488153"                                                         
+  image_id                    = "ami-0df7a207adb9748c7"                                                         
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
