@@ -67,7 +67,7 @@ resource "aws_launch_configuration" "lessonmgmt" {
   instance_type               = "m4.large"
   key_name                    = "eks"
   security_groups             = [aws_security_group.lessonsmgmt.id]
-  user_data                   = "#!/bin/bash\necho ECS_CLUSTER=lessons-mgmt-cluster >> /etc/ecs/ecs.config"
+  user_data                   = "#!/bin/bash\necho ECS_CLUSTER=$(terraform output -raw ecsclustername) >> /etc/ecs/ecs.config"
   iam_instance_profile = aws_iam_instance_profile.ecs_agent.arn
   associate_public_ip_address = true
   root_block_device {
